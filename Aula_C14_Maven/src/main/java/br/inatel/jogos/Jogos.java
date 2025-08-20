@@ -12,4 +12,8 @@ public class Jogos {
         this.genero = genero;
         this.duracao = duracao;
     }
+
+    public String getNome() {
+        return nome;
+    }
 }
