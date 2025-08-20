@@ -1,4 +1,4 @@
 # C14-Teoria_e_Lab
 Repositório contendo os códigos desenvolvidos durante as aulas teóricas e práticas de Engenharia de Software.
 
-Dependências utilizadas: GSON.
+Dependências utilizadas na aula de Maven: GSON - Criação de documentos JSON.

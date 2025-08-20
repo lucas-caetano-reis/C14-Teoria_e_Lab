@@ -3,6 +3,7 @@ package br.inatel;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,7 +51,21 @@ public class Main {
                 case 2:
                     System.out.println("Removendo um jogo...");
                     System.out.println("Entre com o nome do jogo a ser removido:");
+                    String nomeRemover = entrada.nextLine();
 
+                    boolean removido = false; //flag usada para verificar se o jogo foi removido ou não
+                    Iterator<Jogos> iterator = jogos.iterator(); //"ponteiro" que percorre o array em busca do jogo a ser removido
+                    while (iterator.hasNext()) { //enquanto houver elementos a serem iterados...
+                        Jogos jogo = iterator.next(); // pega o próximo jogo da iteração
+                        if (jogo.getNome().equalsIgnoreCase(nomeRemover)) {
+                            iterator.remove();
+                            removido = true;
+                            System.out.println(nomeRemover + " foi removido com sucesso");
+                        }
+                    }
+                    if (!removido) {
+                        System.out.println(nomeRemover + " não foi encontrado.");
+                    }
                     System.out.println("-------------------------------------------");
                     break;
 
