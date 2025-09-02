@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import br.inatel.jogos.Jogos;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
