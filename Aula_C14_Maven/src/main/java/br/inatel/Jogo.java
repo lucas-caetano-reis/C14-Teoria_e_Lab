@@ -16,4 +16,16 @@ public class Jogos {
     public String getNome() {
         return nome;
     }
+
+    public String getDataLancamento() {
+        return dataLancamento;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public int getDuracao() {
+        return duracao;
+    }
 }
