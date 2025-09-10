@@ -4,5 +4,11 @@
     "dataLancamento": "28/08/2025",
     "genero": "Espionagem",
     "duracao": 24
+  },
+  {
+    "nome": "Minecraft",
+    "dataLancamento": "18/11/2011",
+    "genero": "Sandbox",
+    "duracao": 999
   }
 ]

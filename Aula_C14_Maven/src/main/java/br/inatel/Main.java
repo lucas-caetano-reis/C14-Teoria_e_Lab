@@ -1,15 +1,8 @@
 package br.inatel;
 
-import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

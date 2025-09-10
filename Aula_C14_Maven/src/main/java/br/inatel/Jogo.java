@@ -17,32 +17,15 @@ public class Jogo {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getDataLancamento() {
         return dataLancamento;
-    }
-
-    public void setDataLancamento(String dataLancamento) {
-        this.dataLancamento = dataLancamento;
     }
 
     public String getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
     public int getDuracao() {
         return duracao;
-    }
-
-    public void setDuracao(int duracao) {
-        if (duracao <0)
-        this.duracao = duracao;
     }
 }
