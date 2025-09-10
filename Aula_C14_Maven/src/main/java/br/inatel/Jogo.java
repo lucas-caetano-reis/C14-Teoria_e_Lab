@@ -1,12 +1,12 @@
 package br.inatel;
 
-public class Jogos {
+public class Jogo {
     private String nome;
     private String dataLancamento;
     private String genero;
     private int duracao;
 
-    public Jogos(String nome, String dataLancamento, String genero, int duracao) {
+    public Jogo(String nome, String dataLancamento, String genero, int duracao) {
         this.nome = nome;
         this.dataLancamento = dataLancamento;
         this.genero = genero;
@@ -42,6 +42,7 @@ public class Jogos {
     }
 
     public void setDuracao(int duracao) {
+        if (duracao <0)
         this.duracao = duracao;
     }
 }

@@ -1,5 +1,6 @@
 package br.inatel;
 
+import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,94 +14,88 @@ import com.google.gson.GsonBuilder;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
+
+        BibliotecaJogo biblioteca = new BibliotecaJogo();
+        biblioteca.importarDeJson("jogo.json");
+        System.out.println("\n-------------------------------------------");
+        System.out.println("=== Bem-vindo à Biblioteca de Jogos ===");
+        System.out.println("Jogos carregados da última sessão: " + biblioteca.obterTamanho());
+
         boolean flag = true;
-
-        List<Jogos> jogos = new ArrayList<Jogos>();
-
         while(flag){
-            System.out.println("-------------------------------------------");
-            System.out.println("Bem vindo ao terminal de jogos:");
-            System.out.println("1 - Adicionar um jogo ao array:");
-            System.out.println("2 - Remover um jogo do array:");
-            System.out.println("3 - Gerar um arquivo JSON com os dados dos jogos cadastrados:");
-            System.out.println("4 - Sair do terminal:");
+            System.out.println("\nOpções da iblioteca:");
+            System.out.println("1. Adicionar jogo");
+            System.out.println("2. Listar jogos");
+            System.out.println("3. Remover jogo");
+            System.out.println("4. Salvar e sair");
+            System.out.print("Escolha uma opção: ");
 
             int opcao = entrada.nextInt();
             entrada.nextLine();  //Quebra de linha
 
             switch (opcao){
                 case 1:
-                    System.out.println("Criando um jogo...");
-                    System.out.println("Entre com o nome do jogo:");
+                    System.out.print("\nNome do jogo: ");
                     String nome = entrada.nextLine();
-                    System.out.println("Entre com a data de lançamento do jogo:");
-                    String dataLancamento = entrada.nextLine();
-                    System.out.println("Entre com o gênero do jogo:");
+                    System.out.print("Data de lançamento: ");
+                    String data = entrada.nextLine();
+                    System.out.print("Gênero: ");
                     String genero = entrada.nextLine();
-                    System.out.println("Entre com a duração do jogo");
+                    System.out.print("Duração (em horas): ");
                     int duracao = entrada.nextInt();
+                    entrada.nextLine();
 
-                    jogos.add(new Jogos(nome, dataLancamento, genero, duracao));
-
-                    System.out.println("-------------------------------------------");
+                    Jogo novoJogo = new Jogo(nome, data, genero, duracao);
+                    biblioteca.adicionarJogo(novoJogo);
+                    System.out.println("Jogo adicionado com sucesso!");
                     break;
 
                 case 2:
-                    System.out.println("Removendo um jogo...");
-                    System.out.println("Entre com o nome do jogo a ser removido:");
-                    String nomeRemover = entrada.nextLine();
-
-                    boolean removido = false; //flag usada para verificar se o jogo foi removido ou não
-                    Iterator<Jogos> iterator = jogos.iterator(); //"ponteiro" que percorre o array em busca do jogo a ser removido
-                    while (iterator.hasNext()) { //enquanto houver elementos a serem iterados...
-                        Jogos jogo = iterator.next(); // pega o próximo jogo da iteração
-                        if (jogo.getNome().equalsIgnoreCase(nomeRemover)) {
-                            iterator.remove();
-                            removido = true;
-                            System.out.println(nomeRemover + " foi removido com sucesso");
+                    if (biblioteca.listaVazia()) {
+                        System.out.println("\nNenhum jogo cadastrado.");
+                    } else {
+                        System.out.println("\n=== Lista de Jogos ===");
+                        for (Jogo jogo : biblioteca.listarJogos()) {
+                            System.out.println(
+                                    "- " + jogo.getNome() +
+                                    " | " + jogo.getGenero() +
+                                    " | Lançado em: " + jogo.getDataLancamento() +
+                                    " | Duração: " + jogo.getDuracao() + "h"
+                            );
                         }
                     }
-                    if (!removido) {
-                        System.out.println(nomeRemover + " não foi encontrado.");
-                    }
-                    System.out.println("-------------------------------------------");
                     break;
 
                 case 3:
-                    System.out.println("Criando um arquivo JSON...");
-                    //gson instanciado com PrettyPrinting()
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-                    //Criando o JSON a partir da lista de musicas com a dependencia gson
-                    String json = gson.toJson(jogos);
-
-                    //Escrevendo o json criado no arquivo musicas.json
-                    FileWriter writer;
+                    System.out.print("\nDigite o nome do jogo a remover: ");
+                    String removerNome = entrada.nextLine();
                     try {
-                        writer = new FileWriter("jogos.json");
-                        writer.write(json);
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        biblioteca.removerJogo(removerNome);
+                        System.out.println("Jogo removido com sucesso!");
+                    } catch (Exception e) {
+                        System.out.println("Erro: " + e.getMessage());
                     }
-
-                    System.out.println("-------------------------------------------");
                     break;
 
                 case 4:
-                    System.out.println("Saindo do terminal...");
+                    try (FileWriter writer = new FileWriter("jogo.json")) {
+                        writer.write(biblioteca.exportarParaJson());
+                        System.out.println("\nAlterações salvas em " + "jogo.json");
+                    } catch (IOException e) {
+                        System.out.println("\nErro ao salvar: " + e.getMessage());
+                    }
                     flag = false;
-
-                    System.out.println("-------------------------------------------");
                     break;
+
                 default:
-                    System.out.println("Valor errado. Tente novamente.");
-
-                    System.out.println("-------------------------------------------");
-                    break;
+                    System.out.println("\nOpção inválida. Tente novamente.");
             }
         }
+        entrada.close();
+        System.out.println("\nAté logo!");
+        System.out.println("-------------------------------------------");
     }
 }
